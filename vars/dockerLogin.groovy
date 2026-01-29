@@ -2,8 +2,7 @@
 
 import com.chidi.Docker
 
-
-def call(){
-
-    return new Docker(this).dockerLogin();
+def call() {
+    def docker = new Docker(this)
+    docker.dockerLogin()
 }

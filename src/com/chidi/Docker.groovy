@@ -2,34 +2,32 @@
 package com.chidi
 
 class Docker implements Serializable {
+
     def script
 
-    Docker (script) {
-        this.script = script;
+    Docker(script) {
+        this.script = script
     }
 
-   def buildDockerImage(String imageName) {
-       script.echo "building the docker image..."
-       script.sh "docker build -t $script.imageName ."
-
-
-   }
+    def buildDockerImage(String imageName) {
+        script.echo "Building Docker image..."
+        script.sh "docker build -t ${imageName} ."
+    }
 
     def dockerLogin() {
-        script.withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-
-            script.sh "echo $script.PASS docker login -u $script.USER --password-stdin"
+        script.withCredentials([
+                script.usernamePassword(
+                        credentialsId: 'docker-hub-repo',
+                        usernameVariable: 'USER',
+                        passwordVariable: 'PASS'
+                )
+        ]) {
+            script.sh "echo "$PASS" | docker login -u "$USER" --password-stdin"
 
         }
-
     }
 
     def dockerPush(String imageName) {
-        script.sh "docker push $script.imageName"
-
+        script.sh "docker push ${imageName}"
     }
-
 }
-
-
-
