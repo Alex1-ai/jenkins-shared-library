@@ -22,7 +22,7 @@ class Docker implements Serializable {
                         passwordVariable: 'PASS'
                 )
         ]) {
-            script.sh "echo "$PASS" | docker login -u "$USER" --password-stdin"
+            script.sh "echo $PASS | docker login -u $USER --password-stdin"
 
         }
     }
